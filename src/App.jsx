@@ -11,7 +11,7 @@ const App = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <main className="w-full bg-amber-700">
+      <main className="w-full h-full">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/projects" element={<Projects />} />
