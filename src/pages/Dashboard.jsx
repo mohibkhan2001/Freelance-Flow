@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import Header from "../components/common/Header";
+import StatsGrid from "../components/dashboard/StatsGrid";
+import AlertBanner from "../components/dashboard/AlertBanner";
 
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+  return <div className="w-full h-screen py-6 px-8">
+    <Header HeaderName={"Dashboard"} HeaderDescription={"Welcome back! Here's your project overview."}/>
+    <StatsGrid/>
+    <AlertBanner/>
+  </div>
+};
 
-export default Dashboard
+export default Dashboard;
