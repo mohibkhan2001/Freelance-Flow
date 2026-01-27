@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+.project_card {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+grid-auto-rows: auto;
+grid-column-gap: 0px;
+grid-row-gap: 0px;
+gap: 1rem;            
+}
+
+.project_title_company { grid-area: 1 / 1 / 1 / 5; }
+.project_status { grid-area: 1 / 5 / 1 / 6; }
+.project_description { grid-area: 3 / 1 / 3 / 6; }
+.project_progress { grid-area: 4 / 1 / 5 / 6; }
+.project_time_payment { grid-area: 5 / 1 / 6 / 6; }
