@@ -105,7 +105,7 @@ const ProjetcsCard = ({ selectedFilter }) => {
             </div>
           </div>
         );
-      })}
+      })};
     </div>
   );
 };

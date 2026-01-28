@@ -5,7 +5,7 @@ import AlertBanner from "../components/dashboard/AlertBanner";
 import DashboardContent from "../components/dashboard/DashboardContent";
 
 const Dashboard = () => {
-  return <div className="w-full h-screen py-6 px-8">
+  return <div className="w-full h-screen p-8">
     <Header HeaderName={"Dashboard"} HeaderDescription={"Welcome back! Here's your project overview."}/>
     <StatsGrid/>
     <AlertBanner/>
