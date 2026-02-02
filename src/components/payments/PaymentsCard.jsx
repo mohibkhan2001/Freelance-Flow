@@ -28,7 +28,7 @@ const PaymentsCard = () => {
     },
   ];
   return (
-    <div className="flex flex-wrap w-full relative gap-8">
+    <div className="flex flex-wrap w-full relative gap-6">
       {payments.map((payment) => {
         return (
           <div className="payment_card border h-fit  w-lg rounded-2xl border-gray-200 p-8 flex flex-col justify-around gap-4">
