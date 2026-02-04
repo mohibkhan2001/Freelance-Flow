@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 
 const ProjectsAddForm = ({ setShowForm, setShowOverlay }) => {
   const inputStyle =
-    "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm transition focus:outline-none focus:border-gray-500 ";
+    "w-full border border-gray-300 rounded-lg p-3 text-md transition focus:outline-none focus:border-gray-500 ";
 
   const labelStyle = "text-sm font-medium text-gray-700";
 
