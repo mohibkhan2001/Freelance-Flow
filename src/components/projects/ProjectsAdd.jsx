@@ -48,7 +48,7 @@ const ProjectsAdd = ({ onAddProject }) => {
       remainingTime: deadline, // assuming deadline maps to remainingTime; adjust if needed
       payment,
     };
-
+    localStorage.setItem("New Project",JSON.stringify(newProject));
     onAddProject(newProject);
 
     // Close the modal
