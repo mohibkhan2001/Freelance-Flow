@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import ProjetcsCard from "./ProjectsCard";
 import ProjectsAdd from "./ProjectsAdd";
-import projects from "../../data/projectsData";
+import initialProjects from "../../data/projectsData";
 
 const ProjectsGrid = ({ selectedFilter }) => {
+  const [projects, setProjects] = useState(initialProjects);
+  const addProject = (newProject) => {
+    setProjects((prev) => [newProject, ...prev]);
+  };
   return (
     <div className="projects_grid py-4 flex-1">
       <ProjetcsCard selectedFilter={selectedFilter} projects={projects} />
-      <ProjectsAdd />
+      <ProjectsAdd onAddProject={addProject} />
     </div>
   );
 };

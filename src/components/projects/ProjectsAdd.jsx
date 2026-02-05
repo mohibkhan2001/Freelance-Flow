@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import Overlay from "../common/Overlay";
+import { calculateStatusAndRemainingTime } from "../../utils/dateUtils";
 
-const ProjectsAdd = () => {
+const ProjectsAdd = ({ onAddProject }) => {
   const [showForm, setShowForm] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
 
@@ -24,9 +25,43 @@ const ProjectsAdd = () => {
     setShowOverlay(false);
   };
 
+  const handleDeadlineChange = (e) => {
+    const deadlineValue = e.target.value;
+    setDeadline(deadlineValue);
+
+    const { status, remainingTime } =
+      calculateStatusAndRemainingTime(deadlineValue);
+    setStatus(status);
+    setRemainingTime(remainingTime);
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     console.log("submitted");
+
+    const newProject = {
+      title,
+      company,
+      status,
+      description,
+      progress: 0, // default progress for new project, or add an input if you want
+      remainingTime: deadline, // assuming deadline maps to remainingTime; adjust if needed
+      payment,
+    };
+
+    onAddProject(newProject);
+
+    // Close the modal
+    setShowForm(false);
+    setShowOverlay(false);
+
+    // Reset form fields
+    setTitle("");
+    setCompany("");
+    setPayment("");
+    setDescription("");
+    setDeadline("");
+    setStatus("");
   };
 
   return (
@@ -99,9 +134,7 @@ const ProjectsAdd = () => {
                     className={inputStyle}
                     placeholder="DD / MM / YYYY"
                     value={deadline}
-                    onChange={(e) => {
-                      setDeadline(e.target.value);
-                    }}
+                    onChange={handleDeadlineChange}
                   />
                 </div>
 
