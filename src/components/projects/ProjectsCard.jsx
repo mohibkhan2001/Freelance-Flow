@@ -1,7 +1,6 @@
 import { FaCalendarAlt, FaDollarSign, FaRegBuilding } from "react-icons/fa";
-import projects from "../../data/projectsData";
 
-const ProjetcsCard = ({ selectedFilter }) => {
+const ProjetcsCard = ({ selectedFilter, projects }) => {
   const filteredProjects =
     selectedFilter === "All Projects"
       ? projects
