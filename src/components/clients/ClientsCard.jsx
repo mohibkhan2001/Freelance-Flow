@@ -7,7 +7,7 @@ import clients from "../../data/clientsData";
 const ClientsCard = () => {
  
   return (
-    <div className="flex flex-wrap items-center gap-12">
+    <div className="flex flex-wrap items-center gap-12 select-none">
       {clients.map((client) => {
         return (
           <div

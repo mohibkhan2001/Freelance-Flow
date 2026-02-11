@@ -1,5 +1,6 @@
 const projects = [
   {
+    id: 1,
     title: "Website Design",
     company: "TechCorp Inc.",
     description: "Complete redesign of corporate website with modern UI/UX",
@@ -9,6 +10,7 @@ const projects = [
     status: "ongoing",
   },
   {
+    id: 2,
     title: "Mobile App Development",
     company: "Creative Design Studio",
     description: "iOS and Android app for creative portfolio showcase",
@@ -18,6 +20,7 @@ const projects = [
     status: "ongoing",
   },
   {
+    id: 3,
     title: "Brand Identity Package",
     company: "Startup Ventures",
     description: "Logo design, brand guidelines, and marketing materials",
@@ -27,6 +30,7 @@ const projects = [
     status: "delayed",
   },
   {
+    id: 4,
     title: "E-commerce Platform",
     company: "E-Commerce Solutions",
     description: "Custom e-commerce solution with payment integration",
@@ -36,6 +40,7 @@ const projects = [
     status: "pending",
   },
   {
+    id: 5,
     title: "Marketing Campaign",
     company: "TechCorp Inc.",
     description: "Digital marketing campaign for product launch",

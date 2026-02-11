@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
+import { AiOutlineDelete } from "react-icons/ai";
 import Overlay from "../common/Overlay";
 import { calculateStatusAndRemainingTime } from "../../utils/dateUtils";
 
@@ -19,6 +20,8 @@ const ProjectsAdd = ({ onAddProject }) => {
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
   const [status, setStatus] = useState("");
+  const [tasks, setTasks] = useState([]);
+  const [taskInput, setTaskInput] = useState("");
 
   const handleCloseModal = () => {
     setShowForm(false);
@@ -29,10 +32,38 @@ const ProjectsAdd = ({ onAddProject }) => {
     const deadlineValue = e.target.value;
     setDeadline(deadlineValue);
 
-    const { status, remainingTime } =
+    const { status } =
       calculateStatusAndRemainingTime(deadlineValue);
     setStatus(status);
-    setRemainingTime(remainingTime);
+  };
+
+  const addTask = () => {
+    if (taskInput.trim() === "") return;
+    const newTask = {
+      id: Date.now(),
+      name: taskInput,
+      completed: false,
+    };
+    setTasks([...tasks, newTask]);
+    setTaskInput("");
+  };
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  const toggleTask = (id) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
+  const calculateProgress = () => {
+    if (tasks.length === 0) return 0;
+    const completed = tasks.filter((task) => task.completed).length;
+    return Math.round((completed / tasks.length) * 100);
   };
 
   const submitHandler = (e) => {
@@ -40,15 +71,16 @@ const ProjectsAdd = ({ onAddProject }) => {
     console.log("submitted");
 
     const newProject = {
+      id: Date.now(),
       title,
       company,
       status,
       description,
-      progress: 0, // default progress for new project, or add an input if you want
-      remainingTime: deadline, // assuming deadline maps to remainingTime; adjust if needed
+      progress: calculateProgress(),
+      remainingTime: deadline,
       payment,
+      tasks,
     };
-    localStorage.setItem("New Project",JSON.stringify(newProject));
     onAddProject(newProject);
 
     // Close the modal
@@ -62,12 +94,14 @@ const ProjectsAdd = ({ onAddProject }) => {
     setDescription("");
     setDeadline("");
     setStatus("");
+    setTasks([]);
+    setTaskInput("");
   };
 
   return (
     <div>
       <div
-        className="w-14 h-14 p-2 bg-blue-400 flex justify-center items-center rounded-full absolute right-10 bottom-10 cursor-pointer"
+        className="w-14 h-14 p-2 bg-blue-400 flex justify-center items-center rounded-full absolute right-10 bottom-10 cursor-pointer hover:rotate-360 transition-all duration-200"
         onClick={() => {
           setShowOverlay(true);
           setShowForm(true);
@@ -169,6 +203,71 @@ const ProjectsAdd = ({ onAddProject }) => {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
+              </div>
+
+              {/* Tasks */}
+              <div>
+                <label className={labelStyle}>Project Tasks</label>
+                <div className="flex gap-2 mb-3">
+                  <input
+                    type="text"
+                    className={inputStyle}
+                    placeholder="Add a task..."
+                    value={taskInput}
+                    onChange={(e) => setTaskInput(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        addTask();
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={addTask}
+                    className="px-4 py-2 rounded-lg bg-blue-400 text-white hover:bg-blue-500 transition cursor-pointer whitespace-nowrap"
+                  >
+                    Add Task
+                  </button>
+                </div>
+
+                {/* Tasks List */}
+                {tasks.length > 0 && (
+                  <div className="space-y-2 border border-gray-200 rounded-lg p-3 bg-gray-50 max-h-48 overflow-y-auto">
+                    {tasks.map((task) => (
+                      <div
+                        key={task.id}
+                        className="flex items-center gap-3 bg-white p-2 rounded border border-gray-100"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={task.completed}
+                          onChange={() => toggleTask(task.id)}
+                          className="cursor-pointer"
+                        />
+                        <span
+                          className={`flex-1 ${
+                            task.completed
+                              ? "line-through text-gray-400"
+                              : "text-gray-700"
+                          }`}
+                        >
+                          {task.name}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => deleteTask(task.id)}
+                          className="text-red-500 hover:text-red-700 transition"
+                        >
+                          <AiOutlineDelete className="text-xl" />
+                        </button>
+                      </div>
+                    ))}
+                    <div className="pt-2 border-t border-gray-200 text-sm text-gray-600">
+                      Progress: {calculateProgress()}% ({tasks.filter(t => t.completed).length}/{tasks.length})
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Status */}
