@@ -1,57 +1,13 @@
 import { FaCalendarAlt, FaDollarSign, FaRegBuilding } from "react-icons/fa";
+import { AiOutlineDelete } from "react-icons/ai";
 
-const ProjetcsCard = ({ selectedFilter }) => {
-  const projects = [
-    {
-      title: "Website Design",
-      company: "TechCorp Inc.",
-      description: "Complete redesign of corporate website with modern UI/UX",
-      progress: 65,
-      remainingTime: "19 days overdue",
-      payment: "8,500",
-      status: "ongoing",
-    },
-    {
-      title: "Mobile App Development",
-      company: "Creative Design Studio",
-      description: "iOS and Android app for creative portfolio showcase",
-      progress: 40,
-      remainingTime: "33 days left",
-      payment: "15,000",
-      status: "ongoing",
-    },
-    {
-      title: "Brand Identity Package",
-      company: "Startup Ventures",
-      description: "Logo design, brand guidelines, and marketing materials",
-      progress: 25,
-      remainingTime: "3 days left",
-      payment: "5,000",
-      status: "delayed",
-    },
-    {
-      title: "E-commerce Platform",
-      company: "E-Commerce Solutions",
-      description: "Custom e-commerce solution with payment integration",
-      progress: 0,
-      remainingTime: "47 days left",
-      payment: "20,000",
-      status: "pending",
-    },
-    {
-      title: "Marketing Campaign",
-      company: "TechCorp Inc.",
-      description: "Digital marketing campaign for product launch",
-      progress: 100,
-      remainingTime: "12 days overdue",
-      payment: "6,000",
-      status: "completed",
-    },
-  ];
-
-  const filteredProjects = selectedFilter === "All Projects" 
-    ? projects 
-    : projects.filter(project => project.status === selectedFilter.toLowerCase());
+const ProjetcsCard = ({ selectedFilter, projects, deleteMode, onDelete }) => {
+  const filteredProjects =
+    selectedFilter === "All Projects"
+      ? projects
+      : projects.filter(
+          (project) => project.status === selectedFilter.toLowerCase(),
+        );
 
   const statusStyles = {
     ongoing: "bg-blue-100 text-blue-700",
@@ -65,9 +21,25 @@ const ProjetcsCard = ({ selectedFilter }) => {
       {filteredProjects.map((project, index) => {
         return (
           <div
-            className=" project_card w-90 rounded-xl border border-gray-200  p-5  h-fit cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-100 "
-            key={index}
+            className=" project_card w-90 rounded-xl border border-gray-200  p-5  h-fit cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-100 relative "
+            key={project.id || index}
           >
+            {deleteMode && (
+              <button
+                onClick={() => onDelete(project.id)}
+                className="absolute inset-0 flex items-center justify-center
+               bg-red-100/60 backdrop-blur-[1px]
+               rounded-xl transition-all duration-200"
+                aria-label={`Delete project: ${project.title}`}
+              >
+                <div
+                  className="w-14 h-14 bg-red-500 flex items-center justify-center
+                    rounded-full shadow-lg hover:bg-red-600 transition"
+                >
+                  <AiOutlineDelete className="text-2xl text-white" />
+                </div>
+              </button>
+            )}
             <div className="project_title_company">
               <h2>{project.title}</h2>
               <p className="flex items-center gap-2">
@@ -105,7 +77,7 @@ const ProjetcsCard = ({ selectedFilter }) => {
             </div>
           </div>
         );
-      })};
+      })}
     </div>
   );
 };
