@@ -35,7 +35,7 @@ Check out the live application: **[Freelance Flow](https://freelance-flow-smoky.
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/mohibkhan2001/Freelance-Flow
    cd "Freelance flow"
    ```
 
